@@ -1,4 +1,4 @@
-
+// Get the necessary HTML elements
 const quizContainer = document.getElementById('quiz-container');
 const questionContainer = document.getElementById('question-container');
 const questionElement = document.getElementById('question');
@@ -6,27 +6,27 @@ const answerButtonsElement = document.getElementById('answer-buttons');
 const startNextButton = document.getElementById('start-next-button');
 const timerElement = document.getElementById('timer');
 const endQuizButton = document.getElementById('end-quiz-button');
-
-// create score element and append it to quizContainer
-const scoreElement = document.createElement('p');
 const homeButton = document.getElementById('home-button');
+
+// Create a score element and add it to the quiz container
+const scoreElement = document.createElement('p');
 scoreElement.setAttribute('id', 'score');
 scoreElement.classList.add('hide');
 quizContainer.appendChild(scoreElement);
 
-//variable initialization
-let shuffledQuestions, currentQuestionIndex, timer, score =0;
+// Initialize variables
+let shuffledQuestions; 
+let currentQuestionIndex;
+let timerInterval;
+let score = 0;
 
-//reload page when home button is clicked
-homeButton.addEventListener('click', ()=>{
+// Reload the page when the home button is clicked
+homeButton.addEventListener('click', () => {
   location.reload();
 });
 
-//add event listener to startNextButton that starts quiz or sets next question
+// Add event listeners to buttons
 endQuizButton.addEventListener('click', endQuiz);
-
-
-
 startNextButton.addEventListener('click', () => {
   if (startNextButton.innerText === 'Start') {
     startQuiz();
@@ -35,20 +35,22 @@ startNextButton.addEventListener('click', () => {
     setNextQuestion();
   } else if (startNextButton.innerText === 'Restart'){
     resetQuiz();
-    
   }
 });
 
-//function to execute when endQuizButton is clicked
-
-function endQuiz()
-{
+  // Stop the timer
   stopTimer();
+  
+  // Get the user's name and number input values
   const name = document.getElementById('name').value;
   const number = document.getElementById('number').value;
+  
+  // Calculate the user's score and display it
   const scoreDisplay = `${score}/${questions.length}`;
-
-//create table row to display user's details and score
+  scoreElement.textContent = `Score: ${scoreDisplay}`;
+  scoreElement.classList.remove('hide');
+  
+  // Create a table row to display the user's details and score
   const row = document.createElement('tr');
   const nameCell = document.createElement('td');
   const numberCell = document.createElement('td');
@@ -62,19 +64,18 @@ function endQuiz()
   const tbody = document.querySelector('#score-table tbody');
   tbody.appendChild(row);
   
-  //display score and remarks
-  scoreElement.textContent = `Score: ${scoreDisplay}`;
-  scoreElement.classList.remove('hide');
-  let remarks = ''; 
+  // Display a message based on the user's performance
+  let remarks = '';
   if (score < questions.length * 0.5) {
-    remarks = 'Try Harder Next Time!';
+    remarks = 'Do better next time!';
   } else if (score >= questions.length * 0.5 && score < questions.length * 0.7) {
-    remarks = 'Good Enough!';
+    remarks = 'Great job!';
   } else {
-    remarks = 'That Was Awesome!';
-  } 
+    remarks = 'Amazing work!';
+  }
   alert(remarks);
-  
+}
+
   // change startNextButton text and show endQuizButton and startNextButton
   startNextButton.innerText = 'Restart';
   startNextButton.classList.remove('hide');
