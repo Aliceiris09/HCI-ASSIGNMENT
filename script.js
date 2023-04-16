@@ -74,7 +74,7 @@ startNextButton.addEventListener('click', () => {
     remarks = 'Amazing work!';
   }
   alert(remarks);
-}
+
 
   // change startNextButton text and show endQuizButton and startNextButton
   startNextButton.innerText = 'Restart';
@@ -100,7 +100,7 @@ startNextButton.addEventListener('click', () => {
 
   createPieChart();
 
-}
+
 // function to create pie chart
 function createPieChart() {
   const correctAnswers = score;
