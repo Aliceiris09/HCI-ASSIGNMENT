@@ -1,4 +1,4 @@
-// Get the necessary HTML elements
+//get DOM elements by their IDs
 const quizContainer = document.getElementById('quiz-container');
 const questionContainer = document.getElementById('question-container');
 const questionElement = document.getElementById('question');
@@ -6,27 +6,27 @@ const answerButtonsElement = document.getElementById('answer-buttons');
 const startNextButton = document.getElementById('start-next-button');
 const timerElement = document.getElementById('timer');
 const endQuizButton = document.getElementById('end-quiz-button');
-const homeButton = document.getElementById('home-button');
 
-// Create a score element and add it to the quiz container
+// create score element and append it to quizContainer
 const scoreElement = document.createElement('p');
+const homeButton = document.getElementById('home-button');
 scoreElement.setAttribute('id', 'score');
 scoreElement.classList.add('hide');
 quizContainer.appendChild(scoreElement);
 
-// Initialize variables
-let shuffledQuestions; 
-let currentQuestionIndex;
-let timerInterval;
-let score = 0;
+//initialize variables
+let shuffledQuestions, currentQuestionIndex, timer, score =0;
 
-// Reload the page when the home button is clicked
-homeButton.addEventListener('click', () => {
+//reload page when home button is clicked
+homeButton.addEventListener('click', ()=>{
   location.reload();
 });
 
-// Add event listeners to buttons
+//add event listener to startNextButton that starts quiz or sets next question
 endQuizButton.addEventListener('click', endQuiz);
+
+
+
 startNextButton.addEventListener('click', () => {
   if (startNextButton.innerText === 'Start') {
     startQuiz();
@@ -35,22 +35,20 @@ startNextButton.addEventListener('click', () => {
     setNextQuestion();
   } else if (startNextButton.innerText === 'Restart'){
     resetQuiz();
+    
   }
 });
 
-  // Stop the timer
+//function to execute when endQuizButton is clicked
+
+function endQuiz()
+{
   stopTimer();
-  
-  // Get the user's name and number input values
   const name = document.getElementById('name').value;
   const number = document.getElementById('number').value;
-  
-  // Calculate the user's score and display it
   const scoreDisplay = `${score}/${questions.length}`;
-  scoreElement.textContent = `Score: ${scoreDisplay}`;
-  scoreElement.classList.remove('hide');
-  
-  // Create a table row to display the user's details and score
+
+//create table row to display user's details and score
   const row = document.createElement('tr');
   const nameCell = document.createElement('td');
   const numberCell = document.createElement('td');
@@ -64,18 +62,19 @@ startNextButton.addEventListener('click', () => {
   const tbody = document.querySelector('#score-table tbody');
   tbody.appendChild(row);
   
-  // Display a message based on the user's performance
-  let remarks = '';
+  //display score and remarks
+  scoreElement.textContent = `Score: ${scoreDisplay}`;
+  scoreElement.classList.remove('hide');
+  let remarks = ''; 
   if (score < questions.length * 0.5) {
-    remarks = 'Do better next time!';
+    remarks = 'Try Harder Next Time!';
   } else if (score >= questions.length * 0.5 && score < questions.length * 0.7) {
-    remarks = 'Great job!';
+    remarks = 'Good Enough!';
   } else {
-    remarks = 'Amazing work!';
-  }
+    remarks = 'That Was Awesome!';
+  } 
   alert(remarks);
-
-
+  
   // change startNextButton text and show endQuizButton and startNextButton
   startNextButton.innerText = 'Restart';
   startNextButton.classList.remove('hide');
@@ -100,7 +99,7 @@ startNextButton.addEventListener('click', () => {
 
   createPieChart();
 
-
+}
 // function to create pie chart
 function createPieChart() {
   const correctAnswers = score;
@@ -303,6 +302,7 @@ function setNextQuestion() {
   }
   
   // questions for the quiz. 
+  // questions for the quiz. 
   const questions = [
     {
       question: 'What is the capital city of France?',
@@ -385,8 +385,5 @@ function setNextQuestion() {
       ]
     }
   ];
-  
-  
-
   
   
